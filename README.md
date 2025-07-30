@@ -1,4 +1,4 @@
-readme# :books: CONSULTA INTERACTIVA DE LIBROS
+# :books: CONSULTA INTERACTIVA DE LIBROS
 
 ![Static Badge](https://img.shields.io/badge/STATUS-FINALIZADO-green)
 ![GitHub Org's stars](https://img.shields.io/github/stars/YeissonSteven?style=social)
@@ -24,9 +24,11 @@ Aplicación de consola desarrollada en Java que permite buscar libros por títul
 
 ## :clipboard: Instrucciones de uso
 
-1. Asegúrate de tener Java 17 o superior y una base de datos configurada.
-2. Ejecuta la aplicación (`Principal.java`) desde el contexto de Spring Boot.
-3. Usa el menú interactivo que aparecerá en la consola para operar la aplicación:
+1. Asegúrate de tener Java 17 o superior instalado.
+2. Clona el proyecto y abre en tu IDE favorito (como IntelliJ o Eclipse).
+3. Dirígete al archivo `src/main/resources/application.properties` y configura los datos de conexión a tu base de datos (ver ejemplo abajo).
+4. Ejecuta la clase `Principal.java` como una aplicación Spring Boot.
+5. Usa el menú interactivo que aparecerá en la consola para operar la aplicación:
 
 Seleccione una opción:
 0: Salir
@@ -37,25 +39,51 @@ Seleccione una opción:
 5: Mostrar libros por idioma
 
 
-## :warning: Requisitos previos
+## :gear: Configuración del archivo `application.properties`
 
-- Tener Java 17+ instalado.
-- Tener configurado un entorno Spring Boot con dependencias de JPA y Jackson.
-- Acceso a Internet para conectarse a la API de Gutendex.
+A continuación, un ejemplo usando **H2 en memoria** (para pruebas rápidas) y otro para **MySQL**:
 
-## :file_folder: Estructura del Proyecto
+### 🔹 H2 (base de datos en memoria)
 
-- `Principal.java`: Clase principal con el menú interactivo.
-- `ObtenerDatos.java`: Encargada de hacer las solicitudes HTTP a la API externa.
-- `ConvierteDatos.java`: Usa Jackson para convertir JSON en objetos Java.
-- `Libros.java`: Entidad JPA para representar libros.
-- `Autor.java`: Entidad JPA para representar autores.
-- `IAutorRepository.java`: Repositorio JPA para consultas de autores.
-- `ILibroRepository.java`: Repositorio JPA para consultas de libros.
-- `DatosLibros / RespuestaBusqueda.java`: Modelos para mapear la respuesta JSON de Gutendex.
+```properties
+spring.datasource.url=jdbc:h2:mem:librosdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+spring.jpa.hibernate.ddl-auto=update
+```
 
-## :camera: Capturas de pantalla
+🔹 MySQL
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/librosdb
+spring.datasource.username=root
+spring.datasource.password=tu_contraseña
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.show-sql=true
+```
+    ⚠️ Asegúrate de que tu base de datos esté creada y el puerto sea accesible.
 
+:file_folder: Estructura del Proyecto
+```
+    Principal.java: Clase principal con el menú interactivo.
+
+    ObtenerDatos.java: Encargada de hacer las solicitudes HTTP a la API externa.
+
+    ConvierteDatos.java: Usa Jackson para convertir JSON en objetos Java.
+
+    Libros.java: Entidad JPA para representar libros.
+
+    Autor.java: Entidad JPA para representar autores.
+
+    IAutorRepository.java: Repositorio JPA para consultas de autores.
+
+    ILibroRepository.java: Repositorio JPA para consultas de libros.
+
+    DatosLibros / RespuestaBusqueda.java: Modelos para mapear la respuesta JSON de Gutendex.
+```
 ### 🏁 Menú principal de la consola
 ![Menú principal](assets/img.png)
 
